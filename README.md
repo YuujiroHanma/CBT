@@ -52,10 +52,6 @@ A modern, production-grade e-commerce application built with a **Go backend**, *
 - **Provider:** Stripe (Test Mode)
 - **Features:** Checkout Sessions, Webhook signature verification, Payment status tracking
 
-### **Deployment Targets**
-- **Backend:** Render.com or Fly.io (free tier Go hosting)
-- **Frontend:** Vercel (optimized for Next.js/React)
-
 ---
 
 ## 🌟 Features Implemented
@@ -176,50 +172,6 @@ npm run dev
 The app will open at `http://localhost:5173`.
 
 ---
-
-### Stripe CLI Setup (Optional, for Webhook Testing)
-
-The Stripe CLI allows you to test webhooks locally without deployment.
-
-#### 1. Install Stripe CLI
-**macOS:**
-```bash
-brew install stripe/stripe-cli/stripe
-```
-
-**Windows (PowerShell):**
-```powershell
-choco install stripe
-```
-
-**Linux:**
-```bash
-curl https://files.stripe.com/stripe-cli/releases/latest/linux/x86_64/stripe_linux_windows_amd64.tar.gz -o stripe_linux_windows_amd64.tar.gz
-tar -xf stripe_linux_windows_amd64.tar.gz
-sudo mv stripe /usr/local/bin
-```
-
-#### 2. Login and Forward Webhooks
-```bash
-stripe login
-```
-
-#### 3. Forward Events to Your Local Backend
-```bash
-stripe listen --forward-to localhost:8080/api/webhook/stripe
-```
-
-You'll get a webhook signing secret. Add it to `backend/.env`:
-```env
-STRIPE_WEBHOOK_SECRET=whsec_xxxxx
-```
-
-#### 4. Trigger Test Events
-```bash
-stripe trigger payment_intent.succeeded
-stripe trigger checkout.session.completed
-```
-
 ---
 
 ## 🔑 Environment Variables Template
@@ -396,30 +348,11 @@ In Stripe Checkout, use:
 
 ---
 
-## 🚀 Deployment
-
-### Deploy Backend (Render.com)
-1. Push code to GitHub
-2. Sign up at [Render.com](https://render.com)
-3. Create new Web Service → Connect GitHub repo
-4. Set environment variables in dashboard
-5. Deploy!
-
-### Deploy Frontend (Vercel)
-1. Push code to GitHub
-2. Sign up at [Vercel.com](https://vercel.com)
-3. Import project → Connect GitHub
-4. Add environment variables
-5. Deploy!
-
----
 
 ## 📝 What I Learned
 
 Building this project taught me invaluable lessons about **full-stack development** and **production-grade engineering**:
 
-### Stripe Webhook Integration
-Integrating Stripe webhooks was a humbling experience. The critical lesson: **always verify the cryptographic signature before processing webhook events**. Initially, I tried decoding the JSON directly, but Stripe requires the raw request body for signature verification. This taught me the importance of reading library documentation carefully and understanding security practices like HMAC verification. It's a great example of why simple "decode the JSON and process it" approaches fail in real-world scenarios.
 
 ### Go's Strict Typing and Imports
 Go's strict type system and mandatory import usage (unused imports cause compilation failure) felt restrictive at first, but I now appreciate it as a feature. The language forces you to be intentional about your code. No silent type coercions, no dead imports cluttering your file. This discipline prevents entire classes of bugs that plague dynamically-typed languages. Managing pgx transactions, JSON unmarshaling, and interface{} types taught me to think about data flow and type safety from the ground up.
@@ -463,4 +396,3 @@ This project is provided as-is for learning and interview purposes. Feel free to
 
 This project demonstrates modern web development practices, from secure authentication to real-world payment processing. Built with clean architecture, type safety, and a focus on user experience.
 
-**Built with ❤️ for a technical interview challenge.**
