@@ -1,0 +1,20 @@
+# Environment variables
+.env
+.env.local
+
+# Go
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+/bin/
+/dist/
